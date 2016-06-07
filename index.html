@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework - VideoCanvas</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <style>
+        canvas {border: 5px double #000080; position: absolute; z-index: 0;}
+        #vid2 {width: 710px; z-index: 0;}
+    </style>
+    
+</head>
+<body>
+    
+    <canvas id="myCanvas" width="700" height="400"></canvas>
+
+    <video id="vid2" autoplay loop muted>
+        <source src="waterdrop.mp4" type="video/mp4">
+    </video>
+
+    <script>
+        var canvas, ctx, video;
+        var angle = 0;
+        
+        window.onload = function() {            
+            video = document.getElementById('vid2');
+            canvas = document.getElementById('myCanvas');
+            ctx = canvas.getContext('2d');
+            
+            setInterval("processFrame()", 25);  
+        }
+            
+        function processFrame() {
+            ctx.drawImage(video, 0, 0, 700, 400);
+        
+            ctx.font = "60pt Calibri";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#ffffff"; 
+            ctx.textAlign = "center";
+            ctx.strokeText("Water Drop", 350, 350); 
+            
+            ctx.save();
+            ctx.translate(610,90);
+            ctx.rotate(angle += 0.01);
+            ctx.translate(-660, -140);
+            ctx.strokeRect(610,90,100,100);
+            ctx.restore();
+            
+            ctx.save();
+            ctx.strokeRect(20,20,200,150);
+            ctx.drawImage(video, 20, 20, 200, 150);
+            ctx.restore();
+        }
+        
+    </script>
+</body>
+</html>
